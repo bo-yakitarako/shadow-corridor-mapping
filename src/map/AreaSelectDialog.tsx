@@ -9,8 +9,8 @@ import {
 import { areaName } from './areaName';
 import { useStageValue } from '../state/stage';
 import { useMap } from '../state/map';
-import { useSetCurrentPos } from '../state/currentPos';
 import type { AreaPos } from './Area';
+import { useCurrentPos } from '../state/currentPos';
 
 type Props = {
   type: keyof typeof typeTitle;
@@ -50,12 +50,15 @@ const posTitle = {
 export const AreaSelectDialog: React.FC<Props> = ({ type, pos, open, onClose }) => {
   const stage = useStageValue();
   const [map, setMap] = useMap();
-  const setCurrentPos = useSetCurrentPos();
+  const [currentPos, setCurrentPos] = useCurrentPos();
   const options = Object.entries(areaName[stage][type])
     .map(([num, name]) => [Number(num), name] as const)
     .filter(([num]) => !Object.values(map[type]).includes(num));
   const reset = () => {
     setMap({ ...map, [type]: { ...map[type], [pos]: 0 } });
+    if (currentPos?.type === type && currentPos?.pos === pos) {
+      setCurrentPos(null);
+    }
     onClose();
   };
   return (

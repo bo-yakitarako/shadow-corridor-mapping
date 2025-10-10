@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import { Area } from './Area';
 import { useStageValue } from '../state/stage';
 
-const gap = '6px';
+const gap = '4px';
 
 export const ShadowCorridorMap = () => {
   const stage = useStageValue();

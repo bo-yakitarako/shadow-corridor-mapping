@@ -1,15 +1,15 @@
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { stageAtom } from './stage';
 import { storage } from '../utils/localStorage';
-import type { AreaPos } from '../map/Area';
+import type { AreaProps } from '../map/Area';
 
-export const currentPosInternalAtom = atom<AreaPos | null>(
+export const currentPosInternalAtom = atom<AreaProps | null>(
   storage.get(storage.get('stage')).current,
 );
 
 const currentPosAtom = atom(
   (get) => get(currentPosInternalAtom),
-  (get, set, value: AreaPos | null) => {
+  (get, set, value: AreaProps | null) => {
     const stage = get(stageAtom);
     storage.set(stage, { ...storage.get(stage), current: value });
     set(currentPosInternalAtom, value);

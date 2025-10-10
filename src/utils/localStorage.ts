@@ -1,18 +1,18 @@
-import type { AreaPos } from '../map/Area';
+import type { AreaProps } from '../map/Area';
 
 export const map = {
   center: {
-    goal: 0,
-    northWest: 0,
-    north: 0,
-    northEast: 0,
-    west: 0,
-    center: 0,
-    east: 0,
-    southWest: 0,
-    south: 0,
-    southEast: 0,
-    start: 0,
+    goal: { number: 0, rotation: 0 },
+    northWest: { number: 0, rotation: 0 },
+    north: { number: 0, rotation: 0 },
+    northEast: { number: 0, rotation: 0 },
+    west: { number: 0, rotation: 0 },
+    center: { number: 0, rotation: 0 },
+    east: { number: 0, rotation: 0 },
+    southWest: { number: 0, rotation: 0 },
+    south: { number: 0, rotation: 0 },
+    southEast: { number: 0, rotation: 0 },
+    start: { number: 0, rotation: 0 },
   },
   edge: {
     northNorthWest: 0,
@@ -35,9 +35,12 @@ export const map = {
   },
 };
 
-const startFixed = (start: number) => ({ ...map, center: { ...map.center, start } });
+const startFixed = (number: number) => ({
+  ...map,
+  center: { ...map.center, start: { number, rotation: 0 } },
+});
 
-type CurrentPos = AreaPos | null;
+type CurrentPos = AreaProps | null;
 
 export const defaultMap = {
   higurashi: { map, current: null as CurrentPos },

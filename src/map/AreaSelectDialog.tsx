@@ -6,10 +6,9 @@ import {
   DialogTitle,
   Typography,
 } from '@mui/material';
-import { areaName } from './areaName';
+import { areaName } from '../utils/areaName';
 import { useStageValue } from '../state/stage';
 import { useMap } from '../state/map';
-import type { AreaPos } from './Area';
 import { useCurrentPos } from '../state/currentPos';
 
 type Props = {
@@ -83,8 +82,13 @@ export const AreaSelectDialog: React.FC<Props> = ({ type, pos, open, onClose }) 
       <DialogContent sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
         {options.map(([number, name]) => {
           const onClick = () => {
-            setMap({ ...map, [type]: { ...map[type], [pos]: number } });
-            setCurrentPos({ type, pos } as AreaPos);
+            if (type === 'center') {
+              const area = map[type][pos as keyof (typeof map)['center']];
+              setMap({ ...map, [type]: { ...map[type], [pos]: { ...area, number } } });
+            } else {
+              setMap({ ...map, [type]: { ...map[type], [pos]: number } });
+            }
+            setCurrentPos({ type, pos });
             onClose();
           };
           return (

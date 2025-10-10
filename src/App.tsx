@@ -6,6 +6,7 @@ import { useStageValue } from './state/stage';
 import { useSetMap } from './state/map';
 import { defaultMap } from './utils/localStorage';
 import { useSetCurrentPos } from './state/currentPos';
+import { AreaDetail } from './AreaDetail';
 
 const theme = createTheme({
   palette: { mode: 'dark' },
@@ -33,30 +34,35 @@ export const App = () => {
           alignItems: 'center',
         }}
       >
-        <Box sx={{ position: 'relative' }}>
+        <Box
+          sx={{
+            position: 'relative',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 2,
+          }}
+        >
           <Box
             sx={{
+              display: 'flex',
+              width: '100%',
+              justifyContent: 'center',
+              gap: 2,
               mb: 2,
               position: 'absolute',
-              left: '50%',
-              transform: 'translate(-50%, calc(-100% - 16px))',
+              top: '0',
+              left: '0',
+              transform: 'translateY(calc(-100% - 16px))',
             }}
           >
             <StageSelect />
-          </Box>
-          <ShadowCorridorMap />
-          <Box
-            sx={{
-              position: 'absolute',
-              left: '50%',
-              bottom: 0,
-              transform: 'translate(-50%, calc(100% + 16px))',
-            }}
-          >
             <Button variant="outlined" size="large" onClick={reset}>
               リセット
             </Button>
           </Box>
+          <ShadowCorridorMap />
+          <AreaDetail />
         </Box>
       </Box>
     </ThemeProvider>

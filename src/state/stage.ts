@@ -1,6 +1,6 @@
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { storage } from '../utils/localStorage';
-import type { areaName } from '../map/areaName';
+import type { areaName } from '../utils/areaName';
 import { currentPosInternalAtom } from './currentPos';
 import { mapInternalAtom } from './map';
 

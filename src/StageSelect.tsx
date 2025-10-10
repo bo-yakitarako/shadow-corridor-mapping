@@ -1,6 +1,6 @@
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useStage } from './state/stage';
-import type { areaName } from './map/areaName';
+import type { areaName } from './utils/areaName';
 
 export const StageSelect = () => {
   const [stage, setStage] = useStage();

@@ -52,7 +52,12 @@ export const AreaSelectDialog: React.FC<Props> = ({ type, pos, open, onClose }) 
   const [currentPos, setCurrentPos] = useCurrentPos();
   const options = Object.entries(areaName[stage][type])
     .map(([num, name]) => [Number(num), name] as const)
-    .filter(([num]) => !Object.values(map[type]).includes(num));
+    .filter(
+      ([num]) =>
+        !(Object.values(map[type]) as (number | { number: number })[]).some((value) =>
+          typeof value === 'number' ? value === num : value.number === num,
+        ),
+    );
   const reset = () => {
     setMap({ ...map, [type]: { ...map[type], [pos]: 0 } });
     if (currentPos?.type === type && currentPos?.pos === pos) {

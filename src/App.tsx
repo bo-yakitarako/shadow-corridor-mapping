@@ -1,4 +1,4 @@
-import { Box, Button, CssBaseline } from '@mui/material';
+import { Box, Button, Checkbox, CssBaseline, FormControlLabel } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ShadowCorridorMap } from './map/ShadowCorridorMap';
 import { StageSelect } from './StageSelect';
@@ -7,6 +7,7 @@ import { useSetMap } from './state/map';
 import { defaultMap } from './utils/localStorage';
 import { useSetCurrentPos } from './state/currentPos';
 import { AreaDetail } from './AreaDetail';
+import { useMainFloor } from './state/mainFloor';
 
 const theme = createTheme({
   palette: { mode: 'dark' },
@@ -16,6 +17,7 @@ export const App = () => {
   const stage = useStageValue();
   const setMap = useSetMap();
   const setCurrentPos = useSetCurrentPos();
+  const [mainFloor, setMainFloor] = useMainFloor();
   const reset = () => {
     setMap(defaultMap[stage].map);
     setCurrentPos(null);
@@ -60,6 +62,18 @@ export const App = () => {
             <Button variant="outlined" size="large" onClick={reset}>
               リセット
             </Button>
+            {stage === 'gaien' && (
+              <FormControlLabel
+                label="地下表記"
+                control={
+                  <Checkbox
+                    checked={mainFloor === 'B'}
+                    onChange={(e) => setMainFloor(e.target.checked ? 'B' : '1')}
+                    size="large"
+                  />
+                }
+              />
+            )}
           </Box>
           <ShadowCorridorMap />
           <AreaDetail />

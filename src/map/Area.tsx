@@ -7,6 +7,7 @@ import { AreaSelectDialog } from './AreaSelectDialog';
 import { useMapValue } from '../state/map';
 import { useStageValue } from '../state/stage';
 import { calcRotation } from '../utils/areaRotation';
+import { useMainFloorValue } from '../state/mainFloor';
 
 export type Pos = {
   center:
@@ -55,6 +56,7 @@ const size = '100px';
 export const Area: React.FC<AreaProps> = ({ type, pos }) => {
   const stage = useStageValue();
   const map = useMapValue();
+  const mainFloor = useMainFloorValue();
   const [open, setOpen] = useState(false);
   const number =
     type === 'center'
@@ -66,7 +68,7 @@ export const Area: React.FC<AreaProps> = ({ type, pos }) => {
   const isStartFixed = ['shinen', 'ensou'].includes(stage) && pos === 'start';
   const imagePath =
     Object.keys(areaFloor).includes(stage) && number > 0
-      ? `/map/${stage}/${type}/${number}/1.png`
+      ? `/map/${stage}/${type}/${number}/${stage === 'gaien' ? mainFloor : '1'}.png`
       : null;
   const autoRotation = calcRotation(type, pos);
   const rotation =

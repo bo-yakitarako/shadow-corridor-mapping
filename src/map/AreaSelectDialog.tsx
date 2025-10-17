@@ -70,14 +70,16 @@ export const AreaSelectDialog: React.FC<Props> = ({ type, pos, open, onClose }) 
       open={open}
       onClose={onClose}
       container={() => document.body}
-      PaperProps={{
-        sx: {
-          position: 'fixed',
-          top: '20px',
-          left: '20px',
-          right: '20px',
-          margin: 'auto',
-          maxHeight: 'calc(100vh - 40px)',
+      slotProps={{
+        paper: {
+          style: {
+            position: 'fixed',
+            top: '20px',
+            left: '20px',
+            right: '20px',
+            margin: 'auto',
+            maxHeight: 'calc(100vh - 40px)',
+          },
         },
       }}
     >

@@ -70,14 +70,13 @@ export const Area: React.FC<AreaProps> = ({ type, pos }) => {
     Object.keys(areaFloor).includes(stage) && number > 0
       ? `/map/${stage}/${type}/${number}/${stage === 'gaien' ? mainFloor : '1'}.png`
       : null;
-  const autoRotation = calcRotation(type, pos);
   const rotation =
-    autoRotation === null ? map.center[pos as keyof (typeof map)['center']].rotation : autoRotation;
+    calcRotation(type, pos) ?? map.center[pos as keyof (typeof map)['center']].rotation;
 
   return (
     <Box
       sx={{
-        backgroundColor: open ? '#f44336' : imagePath === null ? areaColor[type] : undefined,
+        backgroundColor: open ? '#ffff00' : imagePath === null ? areaColor[type] : undefined,
         width: size,
         height: size,
         color: 'black',

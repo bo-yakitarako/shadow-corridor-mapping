@@ -73,10 +73,41 @@ export const Area: React.FC<AreaProps> = ({ type, pos }) => {
   const rotation =
     calcRotation(type, pos) ?? map.center[pos as keyof (typeof map)['center']].rotation;
 
+  const dynamicSx = {
+    ':before':
+      imagePath === null
+        ? undefined
+        : {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundImage: `url(${imagePath})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            transform: `rotate(${rotation}deg)`,
+            zIndex: -1,
+          },
+    ':after': isCurrent
+      ? {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          outline: '4px solid #f44336',
+          pointerEvents: 'none',
+          zIndex: 1,
+        }
+      : undefined,
+  };
+
   return (
     <Box
       sx={{
-        backgroundColor: open ? '#ffff00' : imagePath === null ? areaColor[type] : undefined,
         width: size,
         height: size,
         color: 'black',
@@ -84,25 +115,12 @@ export const Area: React.FC<AreaProps> = ({ type, pos }) => {
         justifyContent: 'center',
         alignItems: 'center',
         border: 'none',
-        outline: isCurrent ? '4px solid #f44336' : undefined,
-        cursor: isStartFixed ? 'default' : 'pointer',
         position: 'relative',
-        ':before':
-          imagePath === null
-            ? undefined
-            : {
-                content: '""',
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                backgroundImage: `url(${imagePath})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                transform: `rotate(${rotation}deg)`,
-                zIndex: -1,
-              },
+        ...dynamicSx,
+      }}
+      style={{
+        backgroundColor: open ? '#ffff00' : imagePath === null ? areaColor[type] : undefined,
+        cursor: isStartFixed ? 'default' : 'pointer',
       }}
       component="div"
       onContextMenu={(e) => {

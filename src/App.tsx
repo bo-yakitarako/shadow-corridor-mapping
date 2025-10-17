@@ -29,8 +29,8 @@ export const App = () => {
         component="main"
         sx={{
           width: '100%',
-          height: '100dvh',
-          display: 'flex',
+          height: { xs: 'auto', sm: '100dvh' },
+          display: { xs: 'block', sm: 'flex' },
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
@@ -51,11 +51,12 @@ export const App = () => {
               width: '100%',
               justifyContent: 'center',
               gap: 2,
-              mb: 2,
-              position: 'absolute',
-              top: '0',
-              left: '0',
-              transform: 'translateY(calc(-100% - 16px))',
+              mt: { xs: 2, sm: 0 },
+              mb: { xs: 0, sm: 2 },
+              position: { xs: 'relative', sm: 'absolute' },
+              top: { xs: 'auto', sm: '0' },
+              left: { xs: 'auto', sm: '0' },
+              transform: { xs: 'none', sm: 'translateY(calc(-100% - 16px))' },
             }}
           >
             <StageSelect />

@@ -34,6 +34,7 @@ export const AreaDetail = () => {
         maxWidth: '100dvw',
         maxHeight: '100dvh',
         overflow: 'auto',
+        mb: { xs: 4, sm: 0 },
       }}
     >
       <Box sx={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
@@ -53,7 +54,7 @@ export const AreaDetail = () => {
               component="img"
               src={`/map/${stage}/${type}/${number}/${floor}.png`}
               sx={{
-                width: '280px',
+                width: { xs: '45dvw', sm: '280px' },
                 height: 'auto',
                 transform: `rotate(${rotation}deg)`,
                 p: 0,

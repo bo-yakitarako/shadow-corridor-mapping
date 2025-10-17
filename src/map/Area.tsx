@@ -108,8 +108,8 @@ export const Area: React.FC<AreaProps> = ({ type, pos }) => {
   return (
     <Box
       sx={{
-        width: size,
-        height: size,
+        width: { xs: '19dvw', sm: size },
+        height: { xs: '19dvw', sm: size },
         color: 'black',
         display: 'flex',
         justifyContent: 'center',
@@ -137,7 +137,7 @@ export const Area: React.FC<AreaProps> = ({ type, pos }) => {
       }}
     >
       <Typography
-        fontSize={16}
+        fontSize={{ xs: 12, sm: 16 }}
         fontWeight={700}
         color={areaColor[type]}
         sx={{

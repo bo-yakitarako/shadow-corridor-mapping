@@ -126,6 +126,7 @@ export const Area: React.FC<AreaProps> = ({ type, pos }) => {
         alignItems: 'center',
         border: 'none',
         position: 'relative',
+        userSelect: 'none',
         ...dynamicSx,
       }}
       style={{
@@ -152,6 +153,7 @@ export const Area: React.FC<AreaProps> = ({ type, pos }) => {
           fontWeight={700}
           color={areaColor[type]}
           sx={{
+            userSelect: 'none',
             textShadow: `${shadowSize} ${shadowSize} 0px black, ${shadowSize} ${shadowSize} 0px black, ${shadowSize} -${shadowSize} 0px black, -${shadowSize} -${shadowSize} 0px black, ${shadowSize} 0px 0px black, 0px ${shadowSize} 0px black, -${shadowSize} 0px 0px black, 0px -${shadowSize} 0px black;`,
           }}
         >

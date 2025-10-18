@@ -48,7 +48,7 @@ export const AreaDetail = () => {
           maxWidth: '100dvw',
           maxHeight: '100dvh',
           overflow: 'auto',
-          mb: 4,
+          mb: 2,
         }}
       >
         <Box sx={{ display: 'flex', gap: '8px', alignItems: 'center' }}>

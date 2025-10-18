@@ -59,7 +59,11 @@ export const AreaSelectDialog: React.FC<Props> = ({ type, pos, open, onClose }) 
         ),
     );
   const reset = () => {
-    setMap({ ...map, [type]: { ...map[type], [pos]: 0 } });
+    if (type === 'center') {
+      setMap({ ...map, [type]: { ...map[type], [pos]: { number: 0, rotation: 0 } } });
+    } else {
+      setMap({ ...map, [type]: { ...map[type], [pos]: 0 } });
+    }
     if (currentPos?.type === type && currentPos?.pos === pos) {
       setCurrentPos(null);
     }

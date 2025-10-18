@@ -7,7 +7,7 @@ import { AreaSelectDialog } from './AreaSelectDialog';
 import { useMapValue } from '../state/map';
 import { useStageValue } from '../state/stage';
 import { calcRotation } from '../utils/areaRotation';
-import { useMainFloorValue } from '../state/mainFloor';
+import { useSettingsValue } from '../state/settings';
 
 export type Pos = {
   center:
@@ -50,13 +50,22 @@ const areaColor = {
 };
 
 const shadowSize = '1.5px';
-const size = '100px';
+const areaSize = {
+  small: '75px',
+  medium: '100px',
+  large: '140px',
+};
+const areaFontSize = {
+  small: 12,
+  medium: 16,
+  large: 22,
+};
 
 // eslint-disable-next-line complexity
 export const Area: React.FC<AreaProps> = ({ type, pos }) => {
   const stage = useStageValue();
   const map = useMapValue();
-  const mainFloor = useMainFloorValue();
+  const { showAreaName, isGaienUnderground, mapSize } = useSettingsValue();
   const [open, setOpen] = useState(false);
   const number =
     type === 'center'
@@ -66,6 +75,7 @@ export const Area: React.FC<AreaProps> = ({ type, pos }) => {
   const [currentPos, setCurrentPos] = useCurrentPos();
   const isCurrent = type === currentPos?.type && pos === currentPos?.pos;
   const isStartFixed = ['shinen', 'ensou'].includes(stage) && pos === 'start';
+  const mainFloor = isGaienUnderground ? 'B' : '1';
   const imagePath =
     Object.keys(areaFloor).includes(stage) && number > 0
       ? `/map/${stage}/${type}/${number}/${stage === 'gaien' ? mainFloor : '1'}.png`
@@ -108,8 +118,8 @@ export const Area: React.FC<AreaProps> = ({ type, pos }) => {
   return (
     <Box
       sx={{
-        width: { xs: '19dvw', sm: size },
-        height: { xs: '19dvw', sm: size },
+        width: { xs: '19dvw', sm: areaSize[mapSize] },
+        height: { xs: '19dvw', sm: areaSize[mapSize] },
         color: 'black',
         display: 'flex',
         justifyContent: 'center',
@@ -136,16 +146,18 @@ export const Area: React.FC<AreaProps> = ({ type, pos }) => {
         }
       }}
     >
-      <Typography
-        fontSize={{ xs: 12, sm: 16 }}
-        fontWeight={700}
-        color={areaColor[type]}
-        sx={{
-          textShadow: `${shadowSize} ${shadowSize} 0px black, ${shadowSize} ${shadowSize} 0px black, ${shadowSize} -${shadowSize} 0px black, -${shadowSize} -${shadowSize} 0px black, ${shadowSize} 0px 0px black, 0px ${shadowSize} 0px black, -${shadowSize} 0px 0px black, 0px -${shadowSize} 0px black;`,
-        }}
-      >
-        {isStartFixed ? 'スタート' : (name ?? '')}
-      </Typography>
+      {showAreaName && (
+        <Typography
+          fontSize={{ xs: 12, sm: areaFontSize[mapSize] }}
+          fontWeight={700}
+          color={areaColor[type]}
+          sx={{
+            textShadow: `${shadowSize} ${shadowSize} 0px black, ${shadowSize} ${shadowSize} 0px black, ${shadowSize} -${shadowSize} 0px black, -${shadowSize} -${shadowSize} 0px black, ${shadowSize} 0px 0px black, 0px ${shadowSize} 0px black, -${shadowSize} 0px 0px black, 0px -${shadowSize} 0px black;`,
+          }}
+        >
+          {isStartFixed ? 'スタート' : (name ?? '')}
+        </Typography>
+      )}
       <AreaSelectDialog type={type} pos={pos} open={open} onClose={() => setOpen(false)} />
     </Box>
   );

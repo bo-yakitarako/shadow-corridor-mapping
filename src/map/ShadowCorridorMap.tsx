@@ -1,11 +1,12 @@
 import { Box } from '@mui/material';
 import { Area } from './Area';
 import { useStageValue } from '../state/stage';
-
-const gap = '2px';
+import { useSettingsValue } from '../state/settings';
 
 export const ShadowCorridorMap = () => {
   const stage = useStageValue();
+  const { showAreaOutline } = useSettingsValue();
+  const gap = showAreaOutline ? '2px' : undefined;
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap }}>
       <Box sx={{ display: 'flex', gap }}>

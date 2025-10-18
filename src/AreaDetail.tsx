@@ -4,13 +4,26 @@ import { useMap } from './state/map';
 import { useCurrentPosValue } from './state/currentPos';
 import { areaFloor } from './utils/areaFloor';
 import { calcRotation } from './utils/areaRotation';
+import { useSettingsValue } from './state/settings';
 
 const floorTitle = { '1': '1階', '2': '2階', '3': '3階', '4': '4階', B: '地下1階', B2: '地下2階' };
+
+const xsSize = {
+  small: '30dvw',
+  medium: '45dvw',
+  large: '60dvw',
+};
+const size = {
+  small: '180px',
+  medium: '280px',
+  large: '400px',
+};
 
 export const AreaDetail = () => {
   const stage = useStageValue();
   const [map, setMap] = useMap();
   const currentPos = useCurrentPosValue();
+  const { areaDetailSize } = useSettingsValue();
   if (currentPos === null || !Object.keys(areaFloor).includes(stage)) {
     return null;
   }
@@ -29,49 +42,46 @@ export const AreaDetail = () => {
     autoRotation === null ? map.center[pos as keyof (typeof map)['center']].rotation : autoRotation;
   const isStartFixed = ['shinen', 'ensou'].includes(stage) && pos === 'start';
   return (
-    <Box
-      sx={{
-        maxWidth: '100dvw',
-        maxHeight: '100dvh',
-        overflow: 'auto',
-        mb: { xs: 4, sm: 0 },
-      }}
-    >
-      <Box sx={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-        {floors.map((floor) => (
-          <Box
-            key={floor}
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '4px',
-              position: 'relative',
-            }}
-          >
-            <Typography fontSize={24}>{floorTitle[floor]}</Typography>
+    <Box>
+      <Box
+        sx={{
+          maxWidth: '100dvw',
+          maxHeight: '100dvh',
+          overflow: 'auto',
+          mb: 4,
+        }}
+      >
+        <Box sx={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          {floors.map((floor) => (
             <Box
-              component="img"
-              src={`/map/${stage}/${type}/${number}/${floor}.png`}
+              key={floor}
               sx={{
-                width: { xs: '45dvw', sm: '280px' },
-                height: 'auto',
-                transform: `rotate(${rotation}deg)`,
-                p: 0,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '4px',
               }}
-            />
-          </Box>
-        ))}
-        {type === 'center' && !isStartFixed && (
+            >
+              <Typography fontSize={24}>{floorTitle[floor]}</Typography>
+              <Box
+                component="img"
+                src={`/map/${stage}/${type}/${number}/${floor}.png`}
+                sx={{
+                  width: { xs: xsSize[areaDetailSize], sm: size[areaDetailSize] },
+                  height: 'auto',
+                  transform: `rotate(${rotation}deg)`,
+                  p: 0,
+                }}
+              />
+            </Box>
+          ))}
+        </Box>
+      </Box>
+      {type === 'center' && !isStartFixed && (
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Button
             variant="outlined"
             size="large"
-            sx={{
-              position: 'absolute',
-              bottom: '-56px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-            }}
             onClick={() => {
               const area = map[type][pos as keyof (typeof map)['center']];
               const rotation = area.rotation === 270 ? 0 : area.rotation + 90;
@@ -80,8 +90,8 @@ export const AreaDetail = () => {
           >
             回転しよ
           </Button>
-        )}
-      </Box>
+        </Box>
+      )}
     </Box>
   );
 };

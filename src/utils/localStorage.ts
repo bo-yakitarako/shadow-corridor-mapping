@@ -49,9 +49,20 @@ export const defaultMap = {
   seiiki: { map, current: null as CurrentPos },
   gaien: { map, current: null as CurrentPos },
 };
+
+type Size = 'small' | 'medium' | 'large';
+const defaultSettings = {
+  showAreaName: true,
+  showAreaOutline: true,
+  isGaienUnderground: false,
+  mapSize: 'medium' as Size,
+  areaDetailSize: 'medium' as Size,
+};
+
 const defaultStorage = {
   stage: 'higurashi' as keyof typeof defaultMap,
   ...defaultMap,
+  settings: defaultSettings,
 };
 
 type StorageProps = typeof defaultStorage;

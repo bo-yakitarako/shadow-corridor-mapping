@@ -137,6 +137,7 @@ export const Area: React.FC<AreaProps> = ({ type, pos }) => {
       onContextMenu={(e) => {
         e.preventDefault();
         if (open) return;
+        console.log({ type, number });
         setCurrentPos(currentPos === null || !isCurrent ? { type, pos } : null);
       }}
       onClick={(e) => {

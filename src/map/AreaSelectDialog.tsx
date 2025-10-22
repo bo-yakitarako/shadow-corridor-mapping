@@ -100,6 +100,7 @@ export const AreaSelectDialog: React.FC<Props> = ({ type, pos, open, onClose }) 
               setMap({ ...map, [type]: { ...map[type], [pos]: number } });
             }
             setCurrentPos({ type, pos });
+            console.log({ type, number });
             onClose();
           };
           return (

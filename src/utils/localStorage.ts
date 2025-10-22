@@ -55,6 +55,7 @@ const defaultSettings = {
   showAreaName: true,
   showAreaOutline: true,
   isGaienUnderground: false,
+  isPlacingBeginnerOnReset: false,
   mapSize: 'medium' as Size,
   areaDetailSize: 'medium' as Size,
 };

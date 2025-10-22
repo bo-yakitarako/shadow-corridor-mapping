@@ -8,6 +8,8 @@ import { defaultMap } from './utils/localStorage';
 import { useSetCurrentPos } from './state/currentPos';
 import { AreaDetail } from './AreaDetail';
 import { SettingDialogWithOpenButton } from './SettingDialogWithOpenButton';
+import { useSettingsValue } from './state/settings';
+import { beginnerArea } from './utils/beginnerArea';
 
 const theme = createTheme({
   palette: { mode: 'dark' },
@@ -17,8 +19,13 @@ export const App = () => {
   const stage = useStageValue();
   const setMap = useSetMap();
   const setCurrentPos = useSetCurrentPos();
+  const { isPlacingBeginnerOnReset } = useSettingsValue();
   const reset = () => {
-    setMap(defaultMap[stage].map);
+    if (isPlacingBeginnerOnReset && stage !== 'seiiki') {
+      setMap(beginnerArea[stage]);
+    } else {
+      setMap(defaultMap[stage].map);
+    }
     setCurrentPos(null);
   };
   return (

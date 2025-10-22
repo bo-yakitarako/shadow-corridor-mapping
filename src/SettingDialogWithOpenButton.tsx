@@ -62,6 +62,16 @@ export const SettingDialogWithOpenButton = () => {
               />
             }
           />
+          <FormControlLabel
+            label="リセット時に初心者固定のエリアを配置する(聖域を除く)"
+            control={
+              <Checkbox
+                checked={settings.isPlacingBeginnerOnReset}
+                onChange={(e) => update('isPlacingBeginnerOnReset', e.target.checked)}
+                size="large"
+              />
+            }
+          />
           <FormControl sx={{ display: { xs: 'none', sm: 'block' } }}>
             <FormLabel id="map-size-label">マップの大きさ</FormLabel>
             <RadioGroup

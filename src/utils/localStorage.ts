@@ -39,6 +39,10 @@ const startFixed = (number: number) => ({
   ...map,
   center: { ...map.center, start: { number, rotation: 0 } },
 });
+const gaienFixed = {
+  ...map,
+  edge: { ...map.edge, south: 10 },
+};
 
 type CurrentPos = AreaProps | null;
 
@@ -47,7 +51,7 @@ export const defaultMap = {
   shinen: { map: startFixed(2), current: null as CurrentPos },
   ensou: { map: startFixed(1), current: null as CurrentPos },
   seiiki: { map, current: null as CurrentPos },
-  gaien: { map, current: null as CurrentPos },
+  gaien: { map: gaienFixed, current: null as CurrentPos },
 };
 
 type Size = 'small' | 'medium' | 'large';

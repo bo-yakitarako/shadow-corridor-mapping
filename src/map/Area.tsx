@@ -74,7 +74,9 @@ export const Area: React.FC<AreaProps> = ({ type, pos }) => {
   const name = areaName[stage][type][number as keyof AreaNameDict[typeof stage][typeof type]];
   const [currentPos, setCurrentPos] = useCurrentPos();
   const isCurrent = type === currentPos?.type && pos === currentPos?.pos;
-  const isStartFixed = ['shinen', 'ensou'].includes(stage) && pos === 'start';
+  const isStartFixed =
+    (['shinen', 'ensou'].includes(stage) && pos === 'start') ||
+    (stage === 'gaien' && type === 'edge' && pos === 'south');
   const mainFloor = isGaienUnderground ? 'B' : '1';
   const imagePath =
     Object.keys(areaFloor).includes(stage) && number > 0

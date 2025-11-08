@@ -2,9 +2,10 @@ import { Box, Button, Typography } from '@mui/material';
 import { useStageValue } from './state/stage';
 import { useMap } from './state/map';
 import { useCurrentPosValue } from './state/currentPos';
-import { areaFloor } from './utils/areaFloor';
 import { calcRotation } from './utils/areaRotation';
 import { useSettingsValue } from './state/settings';
+import { AreaFloorsDialogWithOpenButton } from './AreaFloorsDialogWithOpenButton';
+import { useAreaFloorsValue } from './state/areaFloors';
 
 const floorTitle = { '1': '1階', '2': '2階', '3': '3階', '4': '4階', B: '地下1階', B2: '地下2階' };
 
@@ -24,7 +25,8 @@ export const AreaDetail = () => {
   const [map, setMap] = useMap();
   const currentPos = useCurrentPosValue();
   const { areaDetailSize } = useSettingsValue();
-  if (currentPos === null || !Object.keys(areaFloor).includes(stage)) {
+  const areaFloors = useAreaFloorsValue();
+  if (currentPos === null || !Object.keys(areaFloors).includes(stage)) {
     return null;
   }
   const { type, pos } = currentPos;
@@ -35,7 +37,7 @@ export const AreaDetail = () => {
   if (!number) {
     return null;
   }
-  const floorDict = areaFloor[stage as keyof typeof areaFloor][type];
+  const floorDict = areaFloors[stage as keyof typeof areaFloors][type];
   const floors = floorDict[number as keyof typeof floorDict] as (keyof typeof floorTitle)[];
   const autoRotation = calcRotation(type, pos);
   const rotation =
@@ -77,8 +79,9 @@ export const AreaDetail = () => {
           ))}
         </Box>
       </Box>
-      {type === 'center' && !isStartFixed && (
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
+        <AreaFloorsDialogWithOpenButton />
+        {type === 'center' && !isStartFixed && (
           <Button
             variant="outlined"
             size="large"
@@ -90,8 +93,8 @@ export const AreaDetail = () => {
           >
             回転しよ
           </Button>
-        </Box>
-      )}
+        )}
+      </Box>
     </Box>
   );
 };

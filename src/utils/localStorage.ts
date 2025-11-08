@@ -1,4 +1,5 @@
 import type { AreaProps } from '../map/Area';
+import { areaFloor } from './areaFloor';
 
 export const map = {
   center: {
@@ -68,6 +69,7 @@ const defaultStorage = {
   stage: 'higurashi' as keyof typeof defaultMap,
   ...defaultMap,
   settings: defaultSettings,
+  areaFloors: areaFloor,
 };
 
 type StorageProps = typeof defaultStorage;
